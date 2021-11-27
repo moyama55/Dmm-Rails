@@ -11,6 +11,9 @@
 
   <body>
      <header>
+        <% flash.each do |key, value| %>
+          <%= content_tag(:div, value, class: "#{key}") %>
+        <% end %>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
               <a class="navbar-brand" href="/">
@@ -23,7 +26,16 @@
               <ul class="navbar-nav ml-auto">
               <% if user_signed_in? %>
               <li>
-                <%= link_to "log", destroy_user_session_path, method: :delete %>
+                <%= link_to "Home",user_path(current_user.id),class:"fas fa-home nav-link text-light"%>
+              </li>
+              <li>
+                <%= link_to "Users",users_path, class:"fas fa-users nav-link text-light" %>
+              </li>
+              <li>
+                <%= link_to "Books",books_path, class:"fas fa-book-open nav-link text-light" %>
+              </li>
+              <li>
+                <%= link_to "Log out", destroy_user_session_path,class:"fas fa-sign-out-alt nav-link text-light", method: :delete %>
               </li>
               <% else %>
               <li>
@@ -35,8 +47,9 @@
               </li>
 
               <li>
-              <%= link_to "Sing up", new_user_registration_path,class:"fas fa-user-plus nav-ink text-light" %>
+              <%= link_to "Sign up", new_user_registration_path,class:"fas fa-user-plus nav-ink text-light" %>
               </li>
+
               <li>
               <%= link_to "Log in", new_user_session_path, class:"fas fa-sign-in-alt nav-link text-light" %>
               </li>
@@ -46,7 +59,9 @@
             </div>
         </nav>
     </header>
-      <footer>
+    <main></main>
+    <%= yield %>
+     <footer>
       <div class="container mt-5">
         <div class="row">
           <div class="mx-auto">
@@ -54,8 +69,6 @@
           </div>
         </div>
       </div>
-
-    </footer>
-    <%= yield %>
+      </footer>
   </body>
 </html>
